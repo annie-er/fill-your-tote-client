@@ -1,2 +1,2 @@
 # fill-your-tote-client
-Fill your tote!'s client application
+Client application built with React using Vite.
