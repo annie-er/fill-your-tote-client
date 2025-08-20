@@ -1,0 +1,171 @@
+/* ContactForm.css */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Georgia', serif;
+  background-color: #f5f3f0;
+  color: #2c2c2c;
+  padding: 40px 20px;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #f5f3f0;
+  position: relative;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.header h1 {
+  font-size: 3.5rem;
+  font-weight: normal;
+  letter-spacing: 0.05em;
+  margin-bottom: 20px;
+  color: #2c2c2c;
+}
+
+.header p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+.email-link {
+  color: #2c2c2c;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+.form-container {
+  margin-top: 40px;
+}
+
+.form-row {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.form-group {
+  flex: 1;
+  position: relative;
+}
+
+.form-group.full-width {
+  width: 100%;
+}
+
+label {
+  display: block;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  color: #666;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+textarea,
+select {
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  border-bottom: 2px solid #2c2c2c;
+  background: transparent;
+  font-size: 1rem;
+  color: #2c2c2c;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="date"]:focus,
+textarea:focus,
+select:focus {
+  border-bottom-color: #666;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 120px;
+  border-bottom: 2px solid #2c2c2c;
+}
+
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0 center;
+  background-size: 20px;
+  padding-right: 30px;
+  cursor: pointer;
+}
+
+.helper-text {
+  font-size: 0.8rem;
+  color: #999;
+  margin-top: 5px;
+  font-style: italic;
+}
+
+.submit-container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.submit-btn {
+  background: transparent;
+  border: 2px solid #2c2c2c;
+  color: #2c2c2c;
+  padding: 15px 40px;
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.submit-btn:hover {
+  background: #2c2c2c;
+  color: #f5f3f0;
+}
+
+.decorative-element {
+  position: absolute;
+  bottom: -20px;
+  right: 0;
+  width: 100px;
+  height: 50px;
+  background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 50'%3e%3cpath d='M10,25 Q30,5 50,25 Q70,45 90,25' stroke='%236b4c7a' stroke-width='2' fill='none'/%3e%3c/svg%3e") no-repeat center;
+  background-size: contain;
+}
+
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 2.5rem;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .container {
+    padding: 0 10px;
+  }
+}
