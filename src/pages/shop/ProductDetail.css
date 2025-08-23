@@ -1,0 +1,150 @@
+.product-detail-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: 'Georgia', serif;
+}
+
+.back-button {
+  background: transparent;
+  border: none;
+  color: #2c2c2c;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 30px;
+  padding: 10px 0;
+  text-decoration: underline;
+}
+
+.back-button:hover {
+  color: #666;
+}
+
+.product-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.product-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.product-info {
+  padding: 20px 0;
+}
+
+.product-title {
+  font-size: 2.5rem;
+  font-weight: normal;
+  margin-bottom: 20px;
+  color: #2c2c2c;
+  line-height: 1.2;
+}
+
+.product-description {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.product-price {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2c2c2c;
+  margin-bottom: 40px;
+}
+
+.purchase-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quantity-selector label {
+  font-size: 1rem;
+  color: #666;
+}
+
+.quantity-selector select {
+  padding: 8px 12px;
+  border: 2px solid #2c2c2c;
+  background: white;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-to-cart-button {
+  background: transparent;
+  border: 2px solid #2c2c2c;
+  color: #2c2c2c;
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  align-self: flex-start;
+}
+
+.add-to-cart-button:hover:not(:disabled) {
+  background: #2c2c2c;
+  color: white;
+}
+
+.add-to-cart-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.loading {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.error h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #2c2c2c;
+}
+
+.error p {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+  .product-detail {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .product-title {
+    font-size: 2rem;
+  }
+  
+  .purchase-section {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+}
