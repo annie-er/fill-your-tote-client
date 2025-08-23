@@ -1,6 +1,6 @@
 // ShoppingCart.tsx
 import React, { useState, useEffect } from 'react';
-import { RestClient } from '../RestClient';
+import { RestClient } from '../../RestClient';
 import './ShoppingCart.css';
 
 interface CartItem {

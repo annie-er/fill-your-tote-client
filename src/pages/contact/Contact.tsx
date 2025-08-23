@@ -1,7 +1,21 @@
 import React, { useState } from 'react';
+import { RestClient } from '../../RestClient';
 import './Contact.css';
 
-interface FormData {
+// for backend api
+interface ContactMessage {
+  fullName: string;
+  pronouns?: string;
+  email: string;
+  company?: string;
+  websiteOrProfile?: string;
+  dueDate?: string;
+  budget?: string;
+  message: string;
+}
+
+// for react form state
+interface FormData { 
   fullName: string;
   pronouns: string;
   email: string;
@@ -24,6 +38,9 @@ const Contact: React.FC = () => {
     message: ''
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -32,10 +49,43 @@ const Contact: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Handle form submission here
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      const contactData: ContactMessage = {
+        fullName: formData.fullName,
+        pronouns: formData.pronouns || undefined,
+        email: formData.email,
+        company: formData.company || undefined,
+        websiteOrProfile: formData.website || undefined,
+        dueDate: formData.dueDate || undefined,
+        budget: formData.budget || undefined,
+        message: formData.message
+      };
+
+      await RestClient.submitContactForm(contactData);
+      setSubmitStatus('success');
+      
+      // reset form once submitted
+      setFormData({
+        fullName: '',
+        pronouns: '',
+        email: '',
+        company: '',
+        website: '',
+        dueDate: '',
+        budget: '',
+        message: ''
+      });
+    } catch (error) {
+      console.error('Failed to submit contact form:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -48,6 +98,18 @@ const Contact: React.FC = () => {
         </p>
       </div>
 
+      {submitStatus === 'success' && (
+        <div className="success-message">
+          Thank you! Your message has been sent successfully.
+        </div>
+      )}
+
+      {submitStatus === 'error' && (
+        <div className="error-message">
+          Sorry, there was an error sending your message. Please try again or email directly.
+        </div>
+      )}
+
       <form className="form-container" onSubmit={handleSubmit}>
         <div className="form-row">
           <div className="form-group">
@@ -59,6 +121,7 @@ const Contact: React.FC = () => {
               value={formData.fullName}
               onChange={handleInputChange}
               required
+              disabled={isSubmitting}
             />
           </div>
           <div className="form-group">
@@ -69,6 +132,7 @@ const Contact: React.FC = () => {
               name="pronouns"
               value={formData.pronouns}
               onChange={handleInputChange}
+              disabled={isSubmitting}
             />
           </div>
         </div>
@@ -83,6 +147,7 @@ const Contact: React.FC = () => {
               value={formData.email}
               onChange={handleInputChange}
               required
+              disabled={isSubmitting}
             />
           </div>
           <div className="form-group">
@@ -93,6 +158,7 @@ const Contact: React.FC = () => {
               name="company"
               value={formData.company}
               onChange={handleInputChange}
+              disabled={isSubmitting}
             />
             <div className="helper-text">if applicable</div>
           </div>
@@ -107,6 +173,7 @@ const Contact: React.FC = () => {
               name="website"
               value={formData.website}
               onChange={handleInputChange}
+              disabled={isSubmitting}
             />
           </div>
         </div>
@@ -120,6 +187,7 @@ const Contact: React.FC = () => {
               name="dueDate"
               value={formData.dueDate}
               onChange={handleInputChange}
+              disabled={isSubmitting}
             />
             <div className="helper-text">typical engagements are 3 months+</div>
           </div>
@@ -130,6 +198,7 @@ const Contact: React.FC = () => {
               name="budget"
               value={formData.budget}
               onChange={handleInputChange}
+              disabled={isSubmitting}
             >
               <option value="">$20K+</option>
               <option value="20k-50k">$20K - $50K</option>
@@ -150,13 +219,14 @@ const Contact: React.FC = () => {
               value={formData.message}
               onChange={handleInputChange}
               required
+              disabled={isSubmitting}
             />
           </div>
         </div>
 
         <div className="submit-container">
-          <button type="submit" className="submit-btn">
-            SEND
+          <button type="submit" className="submit-btn" disabled={isSubmitting}>
+            {isSubmitting ? 'SENDING...' : 'SEND'}
           </button>
         </div>
       </form>

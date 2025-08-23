@@ -2,16 +2,38 @@ export class RestClient {
 
     static baseUrl = "http://localhost:8080"
 
+    // contact
+    static async submitContactForm(contactData: any): Promise<any> {
+        const url = `${RestClient.baseUrl}/contact`
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(contactData)
+        })
+        
+        if (!response.ok) {
+            throw new Error(`Failed to submit contact form: ${response.statusText}`)
+        }
+        
+        return await response.json()
+    }
+
     // cart
     static async getCartItems(): Promise<any> {
         const url = `${RestClient.baseUrl}/cart`
         const response = await fetch(url)
+        if (!response.ok) {
+            throw new Error(`Failed to get cart items: ${response.statusText}`)
+        }
         return await response.json()
     }
 
     static async getCartSummary(): Promise<any> {
         const url = `${RestClient.baseUrl}/cart/summary`
         const response = await fetch(url)
+        if (!response.ok) {
+            throw new Error(`Failed to get cart summary: ${response.statusText}`)
+        }
         return await response.json()
     }
 
@@ -61,29 +83,84 @@ export class RestClient {
         )
     }
 
-    // shop
+    // shop (products/totes)
     static async getToteBags(): Promise<any[]> {
         const url = `${RestClient.baseUrl}/products`
         const response = await fetch(url)
-        return await response.json()
+        if (!response.ok) {
+            throw new Error(`Failed to get tote bags: ${response.statusText}`)
+        }
+        
+        const data = await response.json()
+        
+        // Convert relative image URLs to absolute URLs
+        const productsWithFixedUrls = data.map((product: any) => ({
+            ...product,
+            imageUrl: product.imageUrl && product.imageUrl.startsWith('http') 
+                ? product.imageUrl 
+                : product.imageUrl 
+                    ? `http://localhost:8080${product.imageUrl}`
+                    : null
+        }));
+        
+        return productsWithFixedUrls
     }
 
-    static async getTote(id: string): Promise<any> {
-        const url = `${RestClient.baseUrl}/products/${id}`
+    static async getTote(identifier: string): Promise<any> {
+        const url = `${RestClient.baseUrl}/products/${identifier}`
         const response = await fetch(url)
-        return await response.json()
+        if (!response.ok) {
+            throw new Error(`Product not found: ${identifier}`)
+        }
+        
+        const data = await response.json()
+        
+        // Convert relative image URL to absolute URL
+        if (data.imageUrl && !data.imageUrl.startsWith('http')) {
+            data.imageUrl = `http://localhost:8080${data.imageUrl}`
+        }
+        
+        return data
     }
 
     // drawings
     static async getDrawings(): Promise<any[]> {
         const url = `${RestClient.baseUrl}/drawings`
-        const response = await fetch(url)
-        return await response.json()
+        console.log("Fetching from URL:", url);
+        
+        try {
+            const response = await fetch(url)
+            console.log("Response status:", response.status, response.statusText);
+            
+            if (!response.ok) {
+                throw new Error(`Failed to get drawings: ${response.status} ${response.statusText}`)
+            }
+            
+            const data = await response.json()
+            console.log("Raw response data:", data);
+            
+            // Convert relative image URLs to absolute URLs
+            const drawingsWithFullUrls = data.map((drawing: any) => ({
+                ...drawing,
+                imageUrl: drawing.imageUrl.startsWith('http') 
+                    ? drawing.imageUrl 
+                    : `http://localhost:8080${drawing.imageUrl}`
+            }));
+            
+            console.log("Processed drawings:", drawingsWithFullUrls);
+            return drawingsWithFullUrls
+        } catch (error) {
+            console.error("Network error:", error);
+            throw error;
+        }
     }
 
-    static async getDrawing(id: string): Promise<any> {
-        const url = `${RestClient.baseUrl}/drawings/${id}`
+    static async getDrawing(identifier: string): Promise<any> {
+        const url = `${RestClient.baseUrl}/drawings/${identifier}`
         const response = await fetch(url)
+        if (!response.ok) {
+            throw new Error(`Drawing not found: ${identifier}`)
+        }
         return await response.json()
     }
 }

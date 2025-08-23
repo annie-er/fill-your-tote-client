@@ -8,7 +8,6 @@ export default function Menu() {
             <div className="menu-left">
                 <NavLink to="/drawings">DRAWINGS</NavLink>
                 <NavLink to="/shop">SHOP</NavLink>
-                <NavLink to="/services">SERVICES</NavLink>
             </div>
             
             <div className="menu-center">
