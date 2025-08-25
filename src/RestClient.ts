@@ -93,7 +93,6 @@ export class RestClient {
         
         const data = await response.json()
         
-        // Convert relative image URLs to absolute URLs
         const productsWithFixedUrls = data.map((product: any) => ({
             ...product,
             imageUrl: product.imageUrl && product.imageUrl.startsWith('http') 
@@ -115,7 +114,6 @@ export class RestClient {
         
         const data = await response.json()
         
-        // Convert relative image URL to absolute URL
         if (data.imageUrl && !data.imageUrl.startsWith('http')) {
             data.imageUrl = `http://localhost:8080${data.imageUrl}`
         }
@@ -139,7 +137,6 @@ export class RestClient {
             const data = await response.json()
             console.log("Raw response data:", data);
             
-            // Convert relative image URLs to absolute URLs
             const drawingsWithFullUrls = data.map((drawing: any) => ({
                 ...drawing,
                 imageUrl: drawing.imageUrl.startsWith('http') 
@@ -157,10 +154,28 @@ export class RestClient {
 
     static async getDrawing(identifier: string): Promise<any> {
         const url = `${RestClient.baseUrl}/drawings/${identifier}`
-        const response = await fetch(url)
-        if (!response.ok) {
-            throw new Error(`Drawing not found: ${identifier}`)
+        console.log("Fetching drawing from URL:", url);
+        
+        try {
+            const response = await fetch(url)
+            console.log("Drawing response status:", response.status, response.statusText);
+            
+            if (!response.ok) {
+                throw new Error(`Drawing not found: ${identifier}`)
+            }
+            
+            const data = await response.json()
+            console.log("Raw drawing data:", data);
+            
+            if (data.imageUrl && !data.imageUrl.startsWith('http')) {
+                data.imageUrl = `${RestClient.baseUrl}${data.imageUrl}`
+            }
+            
+            console.log("Processed drawing with fixed URL:", data);
+            return data
+        } catch (error) {
+            console.error("Error fetching drawing:", error);
+            throw error;
         }
-        return await response.json()
     }
 }
