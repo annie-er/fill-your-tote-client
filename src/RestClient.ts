@@ -19,14 +19,25 @@ export class RestClient {
     }
 
     // cart
-    static async getCartItems(): Promise<any> {
+    static async getCartItems(): Promise<any[]> {
         const url = `${RestClient.baseUrl}/cart`
         const response = await fetch(url)
         if (!response.ok) {
             throw new Error(`Failed to get cart items: ${response.statusText}`)
         }
-        return await response.json()
+
+        const data = await response.json()
+
+        const itemsWithFixedUrls = data.map((item: any) => ({
+            ...item,
+            image: item.image && !item.image.startsWith('http')
+                ? `${RestClient.baseUrl}${item.image}`
+                : item.image
+        }))
+
+        return itemsWithFixedUrls
     }
+
 
     static async getCartSummary(): Promise<any> {
         const url = `${RestClient.baseUrl}/cart/summary`
