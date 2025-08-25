@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { RestClient } from "../../RestClient";
 import "./Drawings.css";
 
@@ -12,9 +13,9 @@ type Drawing = {
 
 const Drawings: React.FC = () => {
   const [drawings, setDrawings] = useState<Drawing[]>([]);
-  const [layout, setLayout] = useState<"grid" | "masonry">("grid");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("Fetching drawings...");
@@ -33,6 +34,10 @@ const Drawings: React.FC = () => {
         setLoading(false);
       });
   }, []);
+
+  const handleDrawingClick = (drawing: Drawing) => {
+    navigate(`/drawings/${drawing.slug || drawing.id}`);
+  };
 
   if (loading) {
     return <div className="drawings-container">Loading drawings...</div>;
@@ -58,26 +63,21 @@ const Drawings: React.FC = () => {
 
   return (
     <div className="drawings-container">
-      <div className="layout-buttons">
-        <button onClick={() => setLayout("grid")}>Grid (equal size)</button>
-        <button onClick={() => setLayout("masonry")}>Masonry (original size)</button>
+      <div className="masonry-layout">
+        {drawings.map(drawing => (
+          <div 
+            key={drawing.id} 
+            className="drawing-item"
+            onClick={() => handleDrawingClick(drawing)}
+          >
+            <img 
+              src={drawing.imageUrl} 
+              alt={drawing.name} 
+              className="drawing-image" 
+            />
+          </div>
+        ))}
       </div>
-
-      <p>Found {drawings.length} drawings</p>
-
-      {layout === "grid" ? (
-        <div className="grid-layout">
-          {drawings.map(d => (
-            <img key={d.id} src={d.imageUrl} alt={d.name} className="grid-image" />
-          ))}
-        </div>
-      ) : (
-        <div className="masonry-layout">
-          {drawings.map(d => (
-            <img key={d.id} src={d.imageUrl} alt={d.name} className="masonry-image" />
-          ))}
-        </div>
-      )}
     </div>
   );
 };

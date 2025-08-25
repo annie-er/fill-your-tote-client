@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { RestClient } from '../../RestClient';
 import './Contact.css';
 
@@ -40,6 +40,15 @@ const Contact: React.FC = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+
+  // update bckaground when form is successfully submitted
+  useEffect(() => {
+    if (submitStatus === 'success') {
+      document.body.classList.add('form-submitted');
+      setIsFormSubmitted(true);
+    }
+  }, [submitStatus]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -88,29 +97,20 @@ const Contact: React.FC = () => {
     }
   };
 
+  // if form submitted, don't render again
+  if (isFormSubmitted) {
+    return null;
+  }
+
   return (
-    <div className="container">
-      <div className="header">
-        <h1>CONTACT</h1>
-        <p>
-          Say hi, ask a question, or email me<br />
-          directly at <a href="mailto:annierong302@gmail.com" className="email-link">annierong302@gmail.com</a>
-        </p>
-      </div>
+    <form className="form-container" onSubmit={handleSubmit}>
+      <div className="form-content">
+        {submitStatus === 'error' && (
+          <div className="error-message">
+            Sorry, there was an error sending your message. Please try again.
+          </div>
+        )}
 
-      {submitStatus === 'success' && (
-        <div className="success-message">
-          Thank you! Your message has been sent successfully.
-        </div>
-      )}
-
-      {submitStatus === 'error' && (
-        <div className="error-message">
-          Sorry, there was an error sending your message. Please try again or email directly.
-        </div>
-      )}
-
-      <form className="form-container" onSubmit={handleSubmit}>
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="fullName">Full Name</label>
@@ -164,33 +164,19 @@ const Contact: React.FC = () => {
           </div>
         </div>
 
-        <div className="form-row">
-          <div className="form-group full-width">
-            <label htmlFor="website">Website/Social Media Platform</label>
-            <input
-              type="text"
-              id="website"
-              name="website"
-              value={formData.website}
-              onChange={handleInputChange}
-              disabled={isSubmitting}
-            />
-          </div>
+        <div className="form-group">
+          <label htmlFor="website">Website/Social Media Handle</label>
+          <input
+            type="text"
+            id="website"
+            name="website"
+            value={formData.website}
+            onChange={handleInputChange}
+            disabled={isSubmitting}
+          />
         </div>
 
         <div className="form-row">
-          <div className="form-group">
-            <label htmlFor="dueDate">Approximate Project Due Date</label>
-            <input
-              type="date"
-              id="dueDate"
-              name="dueDate"
-              value={formData.dueDate}
-              onChange={handleInputChange}
-              disabled={isSubmitting}
-            />
-            <div className="helper-text">typical engagements are 3 months+</div>
-          </div>
           <div className="form-group">
             <label htmlFor="budget">Budget</label>
             <select
@@ -200,39 +186,48 @@ const Contact: React.FC = () => {
               onChange={handleInputChange}
               disabled={isSubmitting}
             >
-              <option value="">$20K+</option>
-              <option value="20k-50k">$20K - $50K</option>
-              <option value="50k-100k">$50K - $100K</option>
-              <option value="100k+">$100K+</option>
+              <option value="">Select budget range</option>
+              <option value="<200">&lt;$200</option>
+              <option value="200-350">$200 - $350</option>
+              <option value="350-500">$350 - $500</option>
+              <option value="500+">$500+</option>
               <option value="discuss">Let's discuss</option>
             </select>
           </div>
-        </div>
-
-        <div className="form-row">
-          <div className="form-group full-width">
-            <label htmlFor="message">Message</label>
-            <textarea
-              id="message"
-              name="message"
-              rows={6}
-              value={formData.message}
+          <div className="form-group">
+            <label htmlFor="dueDate">Approx. Project Due Date</label>
+            <input
+              type="date"
+              id="dueDate"
+              name="dueDate"
+              value={formData.dueDate}
               onChange={handleInputChange}
-              required
               disabled={isSubmitting}
             />
+            <div className="helper-text">typical engagements are 2 months+</div>
           </div>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="message">I'd Like to Chat About</label>
+          <textarea
+            id="message"
+            name="message"
+            rows={4}
+            value={formData.message}
+            onChange={handleInputChange}
+            required
+            disabled={isSubmitting}
+          />
         </div>
 
         <div className="submit-container">
           <button type="submit" className="submit-btn" disabled={isSubmitting}>
-            {isSubmitting ? 'SENDING...' : 'SEND'}
+            {isSubmitting ? 'Sending...' : 'Send Message'}
           </button>
         </div>
-      </form>
-
-      <div className="decorative-element"></div>
-    </div>
+      </div>
+    </form>
   );
 };
 

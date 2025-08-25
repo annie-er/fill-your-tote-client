@@ -6,7 +6,7 @@ import './DrawingDetail.css';
 interface Drawing {
   id: number;
   name: string;
-  slug: string;
+  slug?: string;
   description: string;
   imageUrl: string;
 }
@@ -15,74 +15,81 @@ const DrawingDetail: React.FC = () => {
   const { identifier } = useParams<{ identifier: string }>();
   const navigate = useNavigate();
   const [drawing, setDrawing] = useState<Drawing | null>(null);
+  const [allDrawings, setAllDrawings] = useState<Drawing[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchDrawing = async () => {
-      if (!identifier) return;
-      
+    const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await RestClient.getDrawing(identifier);
-        setDrawing(data);
+        const current = await RestClient.getDrawing(identifier!);
+        setDrawing(current);
+        const drawings = await RestClient.getDrawings();
+        setAllDrawings(drawings);
       } catch (err) {
-        setError('Drawing not found');
-        console.error('Error fetching drawing:', err);
+        console.error("Error loading drawing:", err);
+        setDrawing(null);
       } finally {
         setLoading(false);
       }
     };
-
-    fetchDrawing();
+    fetchData();
   }, [identifier]);
 
   if (loading) {
+    return <div className="drawing-detail-overlay"><p>Loading...</p></div>;
+  }
+
+  if (!drawing) {
     return (
-      <div className="drawing-detail-container">
-        <div className="loading">Loading...</div>
+      <div className="drawing-detail-overlay">
+        <p>Drawing not found.</p>
+        <button onClick={() => navigate('/drawings')} className="close-button">
+          ×
+        </button>
       </div>
     );
   }
 
-  if (error || !drawing) {
-    return (
-      <div className="drawing-detail-container">
-        <div className="error">
-          <h2>Drawing Not Found</h2>
-          <p>{error || 'The drawing you\'re looking for doesn\'t exist.'}</p>
-          <button onClick={() => navigate('/drawings')} className="back-button">
-            Back to Drawings
-          </button>
-        </div>
-      </div>
-    );
-  }
+  // figure out current index for prev/next
+  const currentIndex = allDrawings.findIndex(
+    d => d.id === drawing.id || d.slug === drawing.slug
+  );
+  const prevDrawing = currentIndex > 0 ? allDrawings[currentIndex - 1] : null;
+  const nextDrawing = currentIndex < allDrawings.length - 1 ? allDrawings[currentIndex + 1] : null;
 
   return (
-    <div className="drawing-detail-container">
-      <button onClick={() => navigate('/drawings')} className="back-button">
-        ← Back to Drawings
+    <div className="drawing-detail-overlay">
+      <button className="close-button" onClick={() => navigate('/drawings')}>
+        ×
       </button>
       
-      <div className="drawing-detail">
-        <div className="drawing-image">
+      <div className="drawing-content">
+        <div className="drawing-image-container">
           <img src={drawing.imageUrl} alt={drawing.name} />
         </div>
-        
         <div className="drawing-info">
-          <h1 className="drawing-title">{drawing.name}</h1>
-          <p className="drawing-description">{drawing.description}</p>
-          
-          <div className="drawing-actions">
-            <button
-              className="contact-button"
-              onClick={() => navigate('/contact')}
-            >
-              Commission Similar Work
-            </button>
-          </div>
+          <h1>{drawing.name}</h1>
+          <p>{drawing.description}</p>
         </div>
+      </div>
+
+      <div className="navigation-container">
+        <button
+          className={`nav-arrow ${!prevDrawing ? 'invisible' : ''}`}
+          onClick={() => prevDrawing && navigate(`/drawings/${prevDrawing.slug || prevDrawing.id}`)}
+          disabled={!prevDrawing}
+        >
+          <span className="material-symbols-outlined">arrow_back</span>
+        </button>
+        
+        <button
+          className={`nav-arrow ${!nextDrawing ? 'invisible' : ''}`}
+          onClick={() => nextDrawing && navigate(`/drawings/${nextDrawing.slug || nextDrawing.id}`)}
+          disabled={!nextDrawing}
+        >
+          <span className="material-symbols-outlined">arrow_forward</span>
+        </button>
       </div>
     </div>
   );

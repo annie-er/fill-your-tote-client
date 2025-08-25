@@ -40,8 +40,6 @@ export default function Shop() {
 
   return (
     <div className="shop-container">
-      <h1>Shop - Tote Bags</h1>
-      
       <div className="products-grid">
         {toteBags.map((tote: Product) => (
           <Link to={`/shop/${tote.slug}`} key={tote.id} className="product-card">

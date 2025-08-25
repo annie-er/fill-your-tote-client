@@ -4,23 +4,46 @@ import "./Menu.css";
 
 export default function Menu() {
     return (
-        <nav className="menu-nav">
-            <div className="menu-left">
-                <NavLink to="/drawings">DRAWINGS</NavLink>
-                <NavLink to="/shop">SHOP</NavLink>
-            </div>
-            
-            <div className="menu-center">
-                <NavLink to="/" className="logo-link">
-                    <img src="/logo.png" alt="Logo" className="logo" />
+        <header className="menu-header">
+            <nav className="menu-nav-left">
+                <NavLink 
+                    to="/drawings" 
+                    className={({ isActive }) => isActive ? 'active' : ''}
+                >
+                    drawings
                 </NavLink>
-            </div>
+                <NavLink 
+                    to="/shop" 
+                    className={({ isActive }) => isActive ? 'active' : ''}
+                >
+                    shop
+                </NavLink>
+            </nav>
             
-            <div className="menu-right">
-                <NavLink to="/about">ABOUT</NavLink>
-                <NavLink to="/contact">CONTACT</NavLink>
-                <NavLink to="/cart">CART</NavLink>
-            </div>
-        </nav>
-    )
+            <NavLink to="/" className="logo-link">
+                <img src="/images/logo.png" alt="Logo" className="logo" />
+            </NavLink>
+            
+            <nav className="menu-nav-right">
+                <NavLink 
+                    to="/about" 
+                    className={({ isActive }) => isActive ? 'active' : ''}
+                >
+                    story
+                </NavLink>
+                <NavLink 
+                    to="/contact" 
+                    className={({ isActive }) => isActive ? 'active' : ''}
+                >
+                    contact
+                </NavLink>
+                <NavLink 
+                    to="/cart" 
+                    className={({ isActive }) => isActive ? 'active' : ''}
+                >
+                    cart
+                </NavLink>
+            </nav>
+        </header>
+    );
 }
