@@ -11,28 +11,34 @@ import Cart from './pages/shopping-cart/ShoppingCart';
 import PageNotFound from './pages/page-not-found/PageNotFound';
 import ProductDetail from './pages/shop/ProductDetail';
 import DrawingDetail from './pages/drawings/DrawingDetail';
+import Footer from './components/Footer'; 
 
 function AppContent() {
   const location = useLocation();
 
-  const hideMenu =
-    location.pathname.startsWith("/drawings/") ||
-    location.pathname.startsWith("/shop/");
+  const hideMenu = location.pathname.startsWith("/drawings/");
+  const hideFooter = location.pathname.startsWith("/drawings/") ||
+  location.pathname.startsWith("/cart") || 
+  location.pathname.startsWith("/shop/") ||
+  location.pathname.startsWith("/contact");
 
   return (
     <div className="app-container">
       {!hideMenu && <Menu />}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/shop/:identifier" element={<ProductDetail />} />
-        <Route path="/drawings" element={<Drawings />} />
-        <Route path="/drawings/:identifier" element={<DrawingDetail />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
+      <main className="main-content">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/shop/:identifier" element={<ProductDetail />} />
+          <Route path="/drawings" element={<Drawings />} />
+          <Route path="/drawings/:identifier" element={<DrawingDetail />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </main>
+      {!hideFooter && <Footer />}
     </div>
   );
 }
