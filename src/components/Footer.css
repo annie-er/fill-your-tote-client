@@ -12,7 +12,7 @@
   left: 0;
   width: 100%;
   height: 40px;
-  background: url('/public/assets/footer-border.png') repeat-x;
+  background: url('/assets/footer-border.png') repeat-x;
   background-size: contain;
 }
 
@@ -135,7 +135,6 @@
   transform: translateX(6px);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .footer-message h1 {
     font-size: 36px;
