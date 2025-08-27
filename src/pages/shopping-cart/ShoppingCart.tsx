@@ -180,7 +180,7 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
                     <img src={item.image} alt={item.name} className="cart-product-image" />
                   </td>
                   <td data-label="Product">
-                    <h3 className="product-name">{item.name}</h3>
+                    <h3 className="cart-product-name">{item.name}</h3>
                   </td>
                   <td data-label="Price" className="item-price">
                     €{item.price.toFixed(2)}
