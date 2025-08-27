@@ -123,18 +123,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-
         <div className="faq-spacer"></div>
-
-        <div className="memories-section">
-          <div className="memories-image-container">
-            <img
-              src="/assets/memories.png"
-              alt="Memories"
-              className="memories-image"
-            />
-          </div>
-        </div>
       </div>
     </div>
   );
