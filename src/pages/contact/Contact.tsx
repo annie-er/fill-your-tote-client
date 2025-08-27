@@ -99,7 +99,20 @@ const Contact: React.FC = () => {
 
   // if form submitted, don't render again
   if (isFormSubmitted) {
-    return null;
+    return (
+      <div className={`contact-page ${isFormSubmitted ? 'form-submitted' : ''}`}>
+        {!isFormSubmitted ? (
+          <form className="form-container" onSubmit={handleSubmit}>
+            {/* form fields + submit button */}
+          </form>
+        ) : (
+          <div className="success-content">
+            <h1>Thank you!</h1>
+            <p>I’ll be in touch soon!</p>
+          </div>
+        )}
+      </div>
+    );
   }
 
   return (
