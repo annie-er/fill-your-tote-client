@@ -1,11 +1,12 @@
 .drawings-container {
-    padding-top: 10rem;
+    /* padding-top: 10rem; */
     margin: 0;
     width: 100vw;
     margin-left: calc(-50vw + 50%);
     position: relative;
     background-color: #ffffff;
     min-height: 100vh;
+    padding: 180px 80px 80px; /* top, sides, bottom */
 }
 
 .masonry-layout {
@@ -44,6 +45,11 @@
     height: auto;
     display: block;
     border-radius: 0;
+    transition: transform 0.3s ease;
+}
+
+.drawing-item:hover .drawing-image {
+  transform: scale(1.02);
 }
 
 .drawing-title {
