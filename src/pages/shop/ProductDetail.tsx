@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { RestClient } from '../../RestClient';
+import CartNotification from "./CartNotification";
 import './ProductDetail.css';
 
 interface Product {
@@ -20,6 +21,7 @@ const ProductDetail: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [addingToCart, setAddingToCart] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -46,8 +48,10 @@ const ProductDetail: React.FC = () => {
     setAddingToCart(true);
     try {
       await RestClient.addToCart(product.id.toString(), quantity);
-      // You might want to show a success message or redirect
-      alert('Added to cart!'); // Replace with better UX later
+      // alert('Added to cart!');
+      setShowNotification(true);
+      // setTimeout(() => setShowNotification(false), 3000);
+
     } catch (err) {
       console.error('Error adding to cart:', err);
       alert('Failed to add to cart');
@@ -71,7 +75,7 @@ const ProductDetail: React.FC = () => {
           <h2>Product Not Found</h2>
           <p>{error || 'The product you\'re looking for doesn\'t exist.'}</p>
           <button onClick={() => navigate('/shop')} className="back-button">
-            Back to Shop
+            Back to shop
           </button>
         </div>
       </div>
@@ -80,36 +84,42 @@ const ProductDetail: React.FC = () => {
 
   return (
     <div className="product-detail-container">
-      <button onClick={() => navigate('/shop')} className="back-button">
-        ← Back to Shop
+      <button onClick={() => navigate('/shop')} className="close-button">
+        ✕
       </button>
       
       <div className="product-detail">
-        <div className="product-image">
+        <div className="product-detail-image">
           <img src={product.imageUrl} alt={product.name} />
         </div>
         
         <div className="product-info">
           <h1 className="product-title">{product.name}</h1>
-          <p className="product-description">{product.description}</p>
-          <div className="product-price">${product.price}</div>
-          
+          <p className="product-detail-description">{product.description}</p>
+          <div className="product-detail-price">
+            <span className="product-price-label">PRICE:</span> ${product.price}
+          </div>
           <div className="purchase-section">
-            <div className="quantity-selector">
-              <label htmlFor="quantity">Quantity:</label>
-              <select
-                id="quantity"
-                value={quantity}
-                onChange={(e) => setQuantity(Number(e.target.value))}
-              >
-                {[...Array(10)].map((_, i) => (
-                  <option key={i + 1} value={i + 1}>
-                    {i + 1}
-                  </option>
-                ))}
-              </select>
+            <div className="quantity-row">
+              <span className="quantity-label">QUANTITY:</span>
+              <div className="product-quantity-controls">
+                <button
+                  className="product-quantity-btn"
+                  onClick={() => setQuantity(prev => Math.max(prev - 1, 1))}
+                  disabled={quantity <= 1}
+                >
+                  -
+                </button>
+                <span className="product-quantity-display">{quantity}</span>
+                <button
+                  className="product-quantity-btn"
+                  onClick={() => setQuantity(prev => prev + 1)}
+                >
+                  +
+                </button>
+              </div>
             </div>
-            
+
             <button
               className="add-to-cart-button"
               onClick={handleAddToCart}
@@ -118,8 +128,19 @@ const ProductDetail: React.FC = () => {
               {addingToCart ? 'Adding...' : 'Add to Cart'}
             </button>
           </div>
+
         </div>
       </div>
+
+      {showNotification && product && (
+        <CartNotification
+          productName={product.name}
+          quantity={quantity}
+          onClose={() => setShowNotification(false)}
+          onViewCart={() => navigate("/cart")}
+        />
+      )}
+
     </div>
   );
 };
