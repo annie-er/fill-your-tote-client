@@ -1,26 +1,22 @@
-/* Home.css */
-
 .home-container {
   position: relative;
 }
 
-/* Fixed background image */
 .background-image {
   position: fixed;
-  top: 175px; /* Account for 150px header */
+  top: 175px;
   left: 0;
   width: 100%;
-  height: 75vh; /* Increased from 60vh to 80vh - bigger image */
+  height: 75vh;
   background-image: url('/assets/home.png');
-  background-size: contain; /* Show entire image without cropping */
+  background-size: contain; /* image w/o cropping */
   background-position: center;
   background-repeat: no-repeat;
-  padding: 1rem; /* Add padding around the image */
+  padding: 1rem;
   box-sizing: border-box;
   z-index: 0;
 }
 
-/* Scrolling white overlay */
 .content-overlay {
   position: relative;
   z-index: 10;
@@ -28,84 +24,8 @@
   min-height: 200vh;
 }
 
-/* Process Section */
-.process-section {
-  padding: 4rem 2rem;
-}
-
-.process-container {
-  max-width: 1152px; /* 72rem */
-  margin: 0 auto;
-}
-
-.process-header {
-  text-align: center;
-  margin-bottom: 4rem;
-}
-
-.process-title {
-    font-family: 'Gaegu', sans-serif;
-    font-weight: 400;
-    font-size: 36px;
-    letter-spacing: 1px;
-    /* color: #1f2937; */
-    margin-bottom: 1rem;
-}
-
-/* .process-subtitle {
-  color: #4b5563;
-} */
-
-/* Process Image Container */
-.process-image-container {
-  width: 100%;
-  max-width: 896px; /* 56rem */
-  margin: 0 auto;
-  opacity: 0.3;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.process-image-container.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.process-image {
-  width: 100%;
-  height: auto;
-  border-radius: 0.5rem;
-}
-
-/* Additional Section */
-.additional-section {
-  padding: 4rem 2rem;
-  background-color: #f9fafb; /* gray-50 */
-}
-
-.additional-container {
-  max-width: 896px; /* 56rem */
-  margin: 0 auto;
-  text-align: center;
-}
-
-.additional-title {
-  font-size: 1.875rem; /* 30px */
-  font-weight: 300;
-  /* color: #1f2937; */
-  margin-bottom: 1.5rem;
-}
-
-.additional-text {
-  /* color: #4b5563;  */
-  line-height: 1.625;
-  max-width: 672px; /* 42rem */
-  margin: 0 auto;
-}
-
-/* Welcome Section */
+/* welcome */
 .welcome-section {
-  /* background-color: #dfb661; */
   padding: 4rem 2rem;
 }
 
@@ -118,26 +38,27 @@
 .welcome-header {
   font-family: 'Gaegu', sans-serif;
   font-weight: 400;
-  font-size: 36px;
+  font-size: 42px;
   letter-spacing: 1px;
-  /* color: #1f2937; */
   margin-bottom: 2rem;
 }
 
 .welcome-text {
-  /* color: #4b5563; */
   max-width: 672px;
   margin: 0 auto;
 }
 
 .welcome-text p {
+  font-family: 'Montserrat', normal;
+  font-weight: 400;
+  font-size: 18px;
+  letter-spacing: 1px;
   line-height: 1.625;
-  font-size: 16px;
 }
 
-/* materials section */
+/* materials */
 .materials-section {
-    background-color: #f7efe2;
+  background-color: #f4f0e5;
   padding: 3rem 2rem;
 }
 
@@ -155,7 +76,7 @@
 }
 
 .materials-container {
-  max-width: 1152px; /* 72rem */
+  max-width: 1152px;
   margin: 0 auto;
 }
 
@@ -165,22 +86,176 @@
 }
 
 .materials-title {
-    font-family: 'Gaegu', sans-serif;
-    font-weight: 400;
-    font-size: 36px;
-    letter-spacing: 1px;
-    /* color: #1f2937; */
-    margin-bottom: 1rem;
+  font-family: 'Gaegu', sans-serif;
+  font-weight: 400;
+  font-size: 36px;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
 }
 
-/* .materials-subtitle {
-  color: #4b5563;
-} */
+.materials-subtitle {
+  font-family: 'Montserrat', normal;
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
 
-/* memories section */
+/* process */
+.process-section {
+  padding: 4rem 2rem;
+}
+
+.process-container {
+  max-width: 1152px;
+  margin: 0 auto;
+}
+
+.process-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.process-title {
+  font-family: 'Gaegu', sans-serif;
+  font-weight: 400;
+  font-size: 36px;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+}
+
+.process-subtitle {
+  font-family: 'Montserrat', normal;
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.process-image-container {
+  width: 100%;
+  max-width: 896px;
+  margin: 0 auto;
+  opacity: 0.3;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.process-image-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.process-image {
+  width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+}
+
+/* faq */
+.faq-section {
+  padding: 80px 0;
+  background-color: #f4f0e5;
+}
+
+.faq-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.faq-title {
+  font-family: 'Gaegu', sans-serif;
+  font-weight: 400;
+  font-size: 36px;
+  letter-spacing: 1px;
+  text-align: center;
+  margin-bottom: 50px;
+  color: #333;
+}
+
+.faq-list {
+  space-y: 20px;
+}
+
+.faq-item {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.faq-question {
+  width: 100%;
+  padding: 24px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 1.125rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  font-family: 'Montserrat', normal;
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: 1px;
+  transition: transform 0.3s ease
+}
+
+.faq-question:hover {
+  transform: scale(1.02);
+}
+
+.faq-icon {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #666;
+  transition: transform 0.3s ease;
+}
+
+.faq-question.expanded .faq-icon {
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease;
+  padding: 0 24px;
+}
+
+.faq-answer.expanded {
+  grid-template-rows: 1fr;
+  padding: 0 24px 24px 24px;
+}
+
+.faq-answer > div {
+  min-height: 0;
+}
+
+.faq-answer p {
+  margin: 0;
+  line-height: 1.6;
+  font-size: 1rem;
+  font-family: 'Montserrat', normal;
+  font-weight: 400;
+  font-size: 15px;
+  letter-spacing: 1px;
+  transition: transform 0.3s ease
+}
+
+.faq-spacer {
+  background-color: white;
+  height: 80px;
+}
+
+/* memories */
 .memories-section {
   padding: 6rem 2rem;
   background-color: white;
+  display: none;
 }
 
 .memories-image-container {
@@ -196,8 +271,41 @@
   border-radius: 0.5rem;
 }
 
-/* Responsive Design for Welcome Section */
 @media (max-width: 768px) {
+  .faq-section {
+    padding: 60px 0;
+  }
+  
+  .faq-title {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+  
+  .faq-question {
+    padding: 20px;
+    font-size: 1rem;
+  }
+  
+  .faq-answer.expanded {
+    padding: 0 20px 20px 20px;
+  }
+
+  .process-section {
+    padding: 2rem 1rem;
+  }
+  
+  .additional-section {
+    padding: 2rem 1rem;
+  }
+  
+  .process-title {
+    font-size: 1.875rem; /* 30px */
+  }
+  
+  .additional-title {
+    font-size: 1.5rem; /* 24px */
+  }
+
   .welcome-section {
     padding: 2rem 1rem;
   }
@@ -215,28 +323,7 @@
   .welcome-header {
     font-size: 1.5rem; /* 24px */
   }
-}
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .process-section {
-    padding: 2rem 1rem;
-  }
-  
-  .additional-section {
-    padding: 2rem 1rem;
-  }
-  
-  .process-title {
-    font-size: 1.875rem; /* 30px */
-  }
-  
-  .additional-title {
-    font-size: 1.5rem; /* 24px */
-  }
-}
-
-@media (max-width: 480px) {
   .process-title {
     font-size: 1.5rem; /* 24px */
   }
