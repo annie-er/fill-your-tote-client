@@ -1,6 +1,6 @@
 export class RestClient {
 
-    static baseUrl = "http://localhost:8080"
+    static baseUrl = import.meta.env.VITE_API_URL || "https://fill-your-tote-api.azurewebsites.net"
 
     // contact
     static async submitContactForm(contactData: any): Promise<any> {
@@ -109,7 +109,7 @@ export class RestClient {
             imageUrl: product.imageUrl && product.imageUrl.startsWith('http') 
                 ? product.imageUrl 
                 : product.imageUrl 
-                    ? `http://localhost:8080${product.imageUrl}`
+                    ? `${RestClient.baseUrl}${product.imageUrl}`
                     : null
         }));
         
@@ -126,7 +126,7 @@ export class RestClient {
         const data = await response.json()
         
         if (data.imageUrl && !data.imageUrl.startsWith('http')) {
-            data.imageUrl = `http://localhost:8080${data.imageUrl}`
+            data.imageUrl = `${RestClient.baseUrl}${data.imageUrl}`
         }
         
         return data
@@ -152,7 +152,7 @@ export class RestClient {
                 ...drawing,
                 imageUrl: drawing.imageUrl.startsWith('http') 
                     ? drawing.imageUrl 
-                    : `http://localhost:8080${drawing.imageUrl}`
+                    : `${RestClient.baseUrl}${drawing.imageUrl}`
             }));
             
             console.log("Processed drawings:", drawingsWithFullUrls);

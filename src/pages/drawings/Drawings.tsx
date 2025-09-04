@@ -47,7 +47,7 @@ const Drawings: React.FC = () => {
     return (
       <div className="drawings-container">
         <p>Error: {error}</p>
-        <p>Make sure your backend server is running on http://localhost:8080</p>
+        <p>Make sure your backend server is running</p>
       </div>
     );
   }

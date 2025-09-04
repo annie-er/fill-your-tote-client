@@ -183,7 +183,7 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
                     <h3 className="cart-product-name">{item.name}</h3>
                   </td>
                   <td data-label="Price" className="item-price">
-                    €{item.price.toFixed(2)}
+                    ${item.price.toFixed(2)}
                   </td>
                   <td data-label="Quantity">
                     <div className="quantity-controls">
@@ -204,7 +204,7 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
                     </div>
                   </td>
                   <td data-label="Total" className="item-total">
-                    €{(item.price * item.quantity).toFixed(2)}
+                    ${(item.price * item.quantity).toFixed(2)}
                   </td>
                   <td data-label="">
                     <button
@@ -224,15 +224,15 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
               <div className="order-summary">
                 <div className="summary-line">
                   <span>GST</span>
-                  <span>€{cartSummary.vatAmount.toFixed(2)}</span>
+                  <span>${cartSummary.vatAmount.toFixed(2)}</span>
                 </div>
                 <div className="summary-line subtotal-line">
                   <span>Subtotal</span>
-                  <span>€{cartSummary.subtotal.toFixed(2)}</span>
+                  <span>${cartSummary.subtotal.toFixed(2)}</span>
                 </div>
                 <div className="summary-line total-line">
                   <span>Total</span>
-                  <span>€{cartSummary.total.toFixed(2)}</span>
+                  <span>${cartSummary.total.toFixed(2)}</span>
                 </div>
               </div>
 
