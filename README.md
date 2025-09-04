@@ -1,3 +1,3 @@
 # fill-your-tote-client
 Client application built with React using Vite.
-- production branch: deployment
+- check out production branch for deployment.
